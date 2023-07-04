@@ -10,7 +10,9 @@ resource "aws_route_table" "main" {
   }
 }
 
-resource "aws_route_table_association" "a" {
-  subnet_id      = aws_subnet.subnet_1.id
+resource "aws_route_table_association" "route_association" {
+  count = length(var.cidr)
+  subnet_id      = aws_subnet.subnet[count.index].id
   route_table_id = aws_route_table.main.id
+
 }
