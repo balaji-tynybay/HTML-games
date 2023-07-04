@@ -1,8 +1,10 @@
-resource "aws_subnet" "subnet_1" {
+resource "aws_subnet" "subnet" {
+  count = length(var.cidr)
   vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.1.0/24"
+  cidr_block = var.cidr[count.index]
+  availability_zone = data.aws_availability_zones.available.names[count.index]
 
   tags = {
-    Name = "main"
+    Name = "main-subnet-${count.index}"
   }
 }
