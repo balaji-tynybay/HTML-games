@@ -10,7 +10,7 @@
 #   tags = {
 #     Name = "web - ${count.index}"
 #   }
-  
+
 # }
 
 # resource "aws_launch_configuration" "as_conf" {
@@ -26,20 +26,20 @@ resource "aws_launch_template" "foobar" {
   name_prefix   = "foobar"
   image_id      = data.aws_ami.ubuntu.id
   instance_type = var.instance
-  user_data = filebase64("userdata.sh")
+  user_data     = filebase64("userdata.sh")
   network_interfaces {
     associate_public_ip_address = true
-    security_groups = [aws_security_group.allow_http.id]
+    security_groups             = [aws_security_group.allow_http.id]
   }
-  
+
 }
 
 resource "aws_autoscaling_group" "bar" {
-  desired_capacity   = 2
-  max_size           = 3
-  min_size           = 1
-  target_group_arns = [aws_lb_target_group.test.arn]
-  vpc_zone_identifier = [ aws_subnet.subnet[0].id,aws_subnet.subnet[1].id]
+  desired_capacity    = 2
+  max_size            = 3
+  min_size            = 1
+  target_group_arns   = [aws_lb_target_group.test.arn]
+  vpc_zone_identifier = [aws_subnet.subnet[0].id, aws_subnet.subnet[1].id]
   launch_template {
     id      = aws_launch_template.foobar.id
     version = "$Latest"
