@@ -3,6 +3,6 @@ sudo apt-get update -y
 sudo apt-get install -y nginx
 sudo systemctl enable nginx
 sudo systemctl start nginx
-git clone https://github.com/jakesgordon/javascript-tetris.git
-sudo cp -R javascript-tetris/* /var/www/html
+git clone https://github.com/nickarocho/minesweeper.git
+sudo cp -R minesweeper/* /var/www/html
 sudo systemctl restart nginx
