@@ -1,9 +1,13 @@
-data "terraform_remote_state" "level1" {
-  backend = "s3"
+terraform {
+  backend "s3" {
+    bucket         = "balaji-my-tf-test-bucket"
+    key            = "level2.tfstate"
+    region         = "us-west-2"
+    dynamodb_table = "balaji-terraform-remote-state"
 
-  config = {
-    bucket = "balaji-my-tf-test-bucket"
-    key    = "level1.tfstate"
-    region = "us-west-2"
   }
+}
+
+provider "aws" {
+  region = "us-west-2"
 }
