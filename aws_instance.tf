@@ -26,6 +26,9 @@ resource "aws_launch_template" "foobar" {
   name_prefix   = "foobar"
   image_id      = data.aws_ami.ubuntu.id
   instance_type = var.instance
+  iam_instance_profile {
+    name = "ssm_profile"
+  }
   user_data     = filebase64("userdata.sh")
   network_interfaces {
     associate_public_ip_address = true
