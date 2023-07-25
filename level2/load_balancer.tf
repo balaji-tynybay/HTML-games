@@ -3,7 +3,8 @@ resource "aws_lb" "test" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.allow_http_for_alb.id]
-  subnets            = [aws_subnet.subnet[0].id, aws_subnet.subnet[1].id]
+  # subnets            = [aws_subnet.subnet[0].id, aws_subnet.subnet[1].id]
+  subnets = data.terraform_remote_state.level1.outputs.subnet_id
 
   enable_deletion_protection = false
 
@@ -16,7 +17,7 @@ resource "aws_lb_target_group" "test" {
   name     = "tf-example-lb-tg"
   port     = var.http_port
   protocol = "HTTP"
-  vpc_id   = aws_vpc.main.id
+  vpc_id   = data.terraform_remote_state.level1.outputs.vpc_id
 }
 
 resource "aws_lb_listener" "front_end" {
