@@ -15,6 +15,3 @@ data "aws_ami" "ubuntu" {
 }
 
 
-data "aws_availability_zones" "available" {
-  state = "available"
-}

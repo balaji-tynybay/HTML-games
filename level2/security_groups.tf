@@ -1,7 +1,9 @@
 resource "aws_security_group" "allow_http" {
   name        = "allow_http"
   description = "Allow http inbound traffic"
-  vpc_id      = aws_vpc.main.id
+  # vpc_id      = aws_vpc.main.id
+  vpc_id = data.terraform_remote_state.level1.outputs.vpc_id
+
 
   ingress {
     description = "HTTP from VPC"
@@ -26,7 +28,7 @@ resource "aws_security_group" "allow_http" {
 resource "aws_security_group" "allow_http_for_alb" {
   name        = "allow_http_for_alb"
   description = "Allow http inbound traffic"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = data.terraform_remote_state.level1.outputs.vpc_id
 
   ingress {
     description = "HTTP from VPC"

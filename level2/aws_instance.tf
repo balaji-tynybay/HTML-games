@@ -42,7 +42,8 @@ resource "aws_autoscaling_group" "bar" {
   max_size            = 3
   min_size            = 1
   target_group_arns   = [aws_lb_target_group.test.arn]
-  vpc_zone_identifier = [aws_subnet.subnet[0].id, aws_subnet.subnet[1].id]
+  # vpc_zone_identifier = [aws_subnet.subnet[0].id, aws_subnet.subnet[1].id]
+  vpc_zone_identifier = data.terraform_remote_state.level1.outputs.subnet_id
   launch_template {
     id      = aws_launch_template.foobar.id
     version = "$Latest"
