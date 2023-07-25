@@ -16,12 +16,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
-      - name: Deploy level2
-        run: cd level2 && terraform init && terraform destroy -auto-approve
-
-      - name: Deploy level1
-        run: cd level1 && terraform init && terraform destroy -auto-approve
 
       - name: Deploy level0
-        run: cd level0 && terraform init && terraform destroy -auto-approve
+        run: cd level0 && terraform init && terraform apply -auto-approve
+
+      - name: Deploy level1
+        run: cd level1 && terraform init && terraform apply -auto-approve
+
+      - name: Deploy level2
+        run: cd level2 && terraform init && terraform apply -auto-approve
