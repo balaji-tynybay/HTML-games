@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Deploy level0
-        run: cd level0 && terraform init && terraform apply -auto-approve 
+        run: cd level0 && terraform init && terraform apply -auto-approve || exit 0
 
       - name: Deploy level1
         run: cd level1 && terraform init && terraform apply -auto-approve
