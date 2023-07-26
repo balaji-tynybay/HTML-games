@@ -5,6 +5,7 @@ terraform {
     region         = "us-west-2"
     dynamodb_table = "balaji-terraform-remote-state"
 
+
   }
 }
 
