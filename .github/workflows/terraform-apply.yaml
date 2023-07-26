@@ -25,3 +25,4 @@ jobs:
 
       - name: Deploy level2
         run: cd level2 && terraform init && terraform apply -auto-approve
+        
