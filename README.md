@@ -34,6 +34,52 @@ Follow these steps to set up and deploy the infrastructure using Terraform.
 
   ```
   terraform init
+
+## Next, provide a section that explains your project's folder structure. You can use code blocks to illustrate the structure visually:
+   ## Folder Structure
+
+<pre>
+## Folder Structure
+
+```
+├── .github/
+│   └── workflows/
+│       └── terraform-deployment.yml
+├── level0/
+│   ├── main.tf
+│   ├── terraform.tfstate
+│   └── provider.tf
+├── level1/
+│   ├── data.tf
+│   ├── data_source.tf
+│   └── outputs.tf
+│   └── route_table.tf
+│   └── subnet.tf
+│   └── terraform.tfvars
+│   └── variables.tf
+│   └── vpc.tf   
+├── level2/
+│   ├── aws_instance.tf
+│   ├── data.tf
+│   └── data_source.tf
+│   └── iam.tf
+│   └── load_balancer.tf
+│   └── outputs.tf
+│   └── security_groups.tf
+│   └── terraform.tfvars
+│   └── userdata.sh
+│   └── variables.tf
+
+```
+</pre>
+By using the preformatted text enclosed in three backticks and specifying the language as "plaintext," you should be able to display your folder structure in a neat and aligned manner in your README. Just copy and paste the above code into your README file.
+
+
+
+
+
+
+
  
 ## Usage
 
