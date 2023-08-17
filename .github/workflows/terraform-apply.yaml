@@ -6,19 +6,21 @@ on:
       - test-one
 
 jobs:
-  push_to_public_repo:
+  push:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Source Repo
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
         with:
-          repository: balaji-tynybay/HTML-games
-          ref: test-one
+          ref: test-one # The branch you want to deploy
 
-      - name: Push Changes to Public Repo
+      - name: Push code to public repo
         run: |
-          git remote add html-games https://github.com/bbalaji13/html-games.git
-          git fetch html-games
-          git checkout -b test-one
-          git push html-games HEAD:test-one
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          
+          git remote add public-repo https://github.com/bbalaji13/html-games.git
+          git push --force public-repo HEAD:test-one
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
