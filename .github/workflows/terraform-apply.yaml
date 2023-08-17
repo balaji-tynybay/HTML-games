@@ -25,9 +25,9 @@ jobs:
           ref: test-one
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
 
-      - name: Copy files
+      - name: Copy files using rsync
         run: |
-          cp -r HTML-games/* .
+          rsync -a HTML-games/ .
 
       - name: Commit and Push Changes
         run: |
