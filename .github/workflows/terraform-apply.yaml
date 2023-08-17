@@ -12,14 +12,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up Git config
+        run: |
+          echo "[user]" > gitconfig
+          echo "  email = actions@github.com" >> gitconfig
+          echo "  name = GitHub Actions" >> gitconfig
+
       - name: Push to Public Repo
         run: |
           # Clone the public repository
-          git clone https://github.com/bbalaji13/html-games public-repo
+          git clone https://github.com/bbalaji13/html-games.git public-repo
           cd public-repo
 
           # Set user identity for Git commands
-          git -c user.email="actions@github.com" -c user.name="GitHub Actions" checkout -b test-one || git checkout test-one
+          GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_PATH=$PWD/../gitconfig git checkout -b test-one || git checkout test-one
 
           # Use rsync to copy contents from private repository
           rsync -av --exclude='.git' ../. .
