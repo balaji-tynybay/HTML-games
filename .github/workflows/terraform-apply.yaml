@@ -34,7 +34,7 @@ jobs:
 
       - name: Copy Files
         run: |
-          cp -r $GITHUB_WORKSPACE/* ./  # Copy files to the root of repo_b
+          rsync -av $GITHUB_WORKSPACE/ ./repo_b/
         env:
           GITHUB_WORKSPACE: ${{ github.workspace }}
 
