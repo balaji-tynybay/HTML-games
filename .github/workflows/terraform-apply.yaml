@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - branch1  # Adjust this to the branch you want to trigger the action on
+
 jobs:
   push_to_public:
     runs-on: ubuntu-latest
