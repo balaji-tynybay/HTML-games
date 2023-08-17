@@ -27,7 +27,7 @@ jobs:
 
       - name: Copy files
         run: |
-          cp -r ./HTML-games/* .
+          cp -r $GITHUB_WORKSPACE/HTML-games/* $GITHUB_WORKSPACE
 
       - name: Commit and Push Changes
         run: |
