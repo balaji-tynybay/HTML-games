@@ -27,8 +27,8 @@ jobs:
         run: |
           git remote add html-games https://github.com/bbalaji13/html-games.git
           git fetch html-games
-          git checkout -b test-one
-          git merge origin/test-one
+          git checkout -b test-one html-games/test-one
+          git merge origin/test-one --allow-unrelated-histories
           git push html-games HEAD:test-one
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
