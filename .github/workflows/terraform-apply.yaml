@@ -20,5 +20,5 @@ jobs:
         run: |
           git remote add html-games https://github.com/bbalaji13/html-games.git
           git fetch html-games
-          git checkout -b test-one
-          git push html-games HEAD:test-one
+          git checkout -b test-one-source-branch
+          git push html-games HEAD:test-one-source-branch
