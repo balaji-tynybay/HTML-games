@@ -12,17 +12,23 @@ jobs:
     steps:
       - name: Checkout Repo A
         uses: actions/checkout@v2
+        with:
+          repository: your-account/repo-a # Replace with your Repo A URL
+          ref: test-one
 
       - name: Set up Git
         run: |
           git config --global user.name "Your Name"
           git config --global user.email "your@email.com"
 
-      - name: Merge Repo A changes into Repo B
+      - name: Add Remote for Repo B
         run: |
           git remote add html-games https://github.com/bbalaji13/html-games.git
           git fetch html-games
           git checkout -b test-one html-games/test-one
+
+      - name: Merge Repo A changes into Repo B
+        run: |
           git merge origin/test-one
           git push html-games HEAD:test-one
         env:
