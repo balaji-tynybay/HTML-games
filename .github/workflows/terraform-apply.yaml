@@ -26,7 +26,7 @@ jobs:
 
       - name: Copy files using rsync
         run: |
-          rsync -a HTML-games/ html-games
+          rsync -a HTML-games/ html-games/
 
       - name: Commit and Push Changes
         run: |
