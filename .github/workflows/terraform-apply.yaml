@@ -1,22 +1,38 @@
-- name: Checkout
-  uses: actions/checkout@v3
-  with:
-    ref: test-one
-    repository: balaji-tynybay/HTML-games
-    path: HTML-game
+name: Sync Repos
 
-- name: Checkout private tools
-  uses: actions/checkout@v3
-  with:
-    ref: test-one
-    repository: bbalaji13/html-games
-    token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
-    path: my-tools
-      run: |
-          rsync -a ../HTML-games/ .
-  
-- name: Commit and Push Changes
-  run: |
-    git add -A
-    git commit -m "Sync changes from private repo"
-    git push origin test-one
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Public Repository
+        uses: actions/checkout@v2
+        with:
+          ref: test-one
+          repository: balaji-tynybay/HTML-games
+          path: HTML-game
+
+      - name: Checkout Private Repository
+        uses: actions/checkout@v2
+        with:
+          ref: test-one
+          repository: bbalaji13/html-games
+          token: ${{ secrets.GH_PAT }}
+          path: my-tools
+
+      - name: Sync Files
+        run: |
+          rsync -a HTML-game/ my-tools/
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add -A
+          git commit -m "Sync changes from private repo"
+          git push origin test-one
