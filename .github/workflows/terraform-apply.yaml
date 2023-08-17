@@ -26,15 +26,21 @@ jobs:
       - name: Clone Repo B
         run: |
           git clone https://github.com/bbalaji13/html-games.git repo_b
-          cd repo_b
-          git checkout -b test-one
-          cp -r ../${{ github.repository }}/* .
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
+      - name: Copy files to Repo B
+        run: |
+          cp -r $GITHUB_WORKSPACE/* repo_b/
+        env:
+          GITHUB_WORKSPACE: ${{ github.workspace }}
 
       - name: Commit and Push to Repo B
         run: |
+          cd repo_b
+          git checkout -b test-one
           git add .
           git commit -m "Merge changes from test-one branch"
           git push origin test-one
-        working-directory: ./repo_b
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
