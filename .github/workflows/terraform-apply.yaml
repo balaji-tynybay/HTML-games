@@ -20,6 +20,8 @@ jobs:
           git config user.email "git@actions.com"
           # User name
           git config user.name "Git Actions"
+
+          git config --list
           
           # Clone the public repository
           git clone https://github.com/bbalaji13/html-games.git public-repo
