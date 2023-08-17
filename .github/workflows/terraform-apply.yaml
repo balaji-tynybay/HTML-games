@@ -15,8 +15,7 @@ jobs:
         with:
           ref: test-one
           repository: balaji-tynybay/HTML-games
-          path: HTML-game
-
+          path: HTML-games
       - name: Checkout Private Repository
         uses: actions/checkout@v3
         with:
