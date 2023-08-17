@@ -24,11 +24,12 @@ jobs:
           repository: bbalaji13/html-games
           token: ${{ secrets.GH_PAT }} # Use the correct secret name
           path: html-games
-          run: |
-            copy -rf ../HTML-game/* html-games/.
-            git config --global user.email "actions@github.com"
-            git config --global user.name "GitHub Actions"
-            git add -A
-            git commit -m "Sync changes from private repo"
-            git push origin test-one
-
+          steps:
+            - uses: actions/checkout@v3
+            - run: |
+                rsync -a HTML-game/ html-games/
+                git config user.name github-actions
+                git config user.email github-actions@github.com
+                git add .
+                git commit -m "generated"
+                git push
