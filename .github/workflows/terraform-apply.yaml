@@ -18,10 +18,18 @@ jobs:
           git config --global user.name "Your Name"
           git config --global user.email "your.email@example.com"
           git remote add public-repo https://github.com/bbalaji13/html-games.git
+          git fetch public-repo
+
+      - name: Check if branch2 exists
+        run: |
+          if git ls-remote --heads public-repo branch2 | grep -q 'refs/heads/branch2'; then
+            git checkout test-one
+          else
+            git checkout -b test-one
+          fi
 
       - name: Push to Public Repository
         run: |
-          git checkout -b test-one
           git push public-repo HEAD:test-one --force
 
 env:
