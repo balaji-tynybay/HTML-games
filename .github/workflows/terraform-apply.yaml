@@ -19,7 +19,10 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Clone Target Repo
-        run: git clone https://github.com/bbalaji13/html-games.git repo_b
+        run: |
+          git clone https://github.com/bbalaji13/html-games.git repo_b
+          cd repo_b
+          git checkout -b test-one
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
@@ -30,14 +33,14 @@ jobs:
           git config user.email "your@email.com"
 
       - name: Copy Files
-        run: cp -r $GITHUB_WORKSPACE/* ./repo_b/
+        run: |
+          cp -r $GITHUB_WORKSPACE/* ./  # Copy files to the root of repo_b
         env:
           GITHUB_WORKSPACE: ${{ github.workspace }}
 
       - name: Commit and Push to Target Repo
         run: |
           cd repo_b
-          git checkout -b test-one
           git add .
           git commit -m "Merge changes from test-one branch"
           git push origin test-one
