@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repo A
+      - name: Checkout Source Repo
         uses: actions/checkout@v2
         with:
           repository: balaji-tynybay/HTML-games
@@ -18,24 +18,23 @@ jobs:
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
-      - name: Set up Git
-        run: |
-          git config --global user.name "Your Name"
-          git config --global user.email "your@email.com"
-
-      - name: Clone Repo B
-        run: |
-          git clone https://github.com/bbalaji13/html-games.git repo_b
+      - name: Checkout Target Repo
+        run: git clone https://github.com/bbalaji13/html-games.git repo_b
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
-      - name: Copy files to Repo B
-        run: |
-          cp -r $GITHUB_WORKSPACE/* repo_b/
+      - name: Copy Files
+        run: cp -r $GITHUB_WORKSPACE/* repo_b/
         env:
           GITHUB_WORKSPACE: ${{ github.workspace }}
 
-      - name: Commit and Push to Repo B
+      - name: Set up Git in Target Repo
+        run: |
+          cd repo_b
+          git config user.name "Your Name"
+          git config user.email "your@email.com"
+
+      - name: Commit and Push to Target Repo
         run: |
           cd repo_b
           git checkout -b test-one
