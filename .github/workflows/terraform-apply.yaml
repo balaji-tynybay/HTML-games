@@ -3,7 +3,7 @@ name: Sync Repos
 on:
   push:
     branches:
-      - test-one
+      - main
 
 jobs:
   sync:
@@ -11,23 +11,23 @@ jobs:
 
     steps:
       - name: Checkout Public Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: test-one
           repository: balaji-tynybay/HTML-games
           path: HTML-game
 
       - name: Checkout Private Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: test-one
           repository: bbalaji13/html-games
-          token: ${{ secrets.GH_PAT }}
-          path: my-tools
+          token: ${{ secrets.GH_PAT }} # Use the correct secret name
+          path: html-games
 
       - name: Sync Files
         run: |
-          rsync -a HTML-game/ my-tools/
+          rsync -a HTML-game/ html-games/
 
       - name: Commit and Push Changes
         run: |
