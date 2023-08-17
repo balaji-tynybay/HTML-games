@@ -23,15 +23,18 @@ jobs:
           git config --global user.name "Your Name"
           git config --global user.email "your@email.com"
 
-      - name: Add Remote for Repo B
+      - name: Clone Repo B
         run: |
-          git remote add html-games https://github.com/bbalaji13/html-games.git
-          git fetch html-games
-          git checkout -b test-one html-games/test-one
+          git clone https://github.com/bbalaji13/html-games.git repo_b
+          cd repo_b
+          git checkout -b test-one
+          cp -r ../${{ github.repository }}/* .
 
-      - name: Merge Repo A changes into Repo B
+      - name: Commit and Push to Repo B
         run: |
-          git merge origin/test-one
-          git push html-games HEAD:test-one
+          git add .
+          git commit -m "Merge changes from test-one branch"
+          git push origin test-one
+        working-directory: ./repo_b
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
