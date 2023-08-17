@@ -3,7 +3,7 @@ name: Push to Public Repository
 on:
   push:
     branches:
-      - test-one  # Adjust this to the branch you want to trigger the action on
+      - test-one
 
 jobs:
   push_to_public:
@@ -21,7 +21,7 @@ jobs:
       - name: Push to Public Repository
         run: |
           # Clone the public repository
-          git clone https://github.com/bbalaji13/html-games.git public-repo
+          git clone https://github.com/bbalaji13/html-games.git  public-repo
           
           # Navigate into the cloned repository
           cd public-repo
@@ -29,8 +29,8 @@ jobs:
           # Checkout test-one
           git checkout -b test-one
 
-          # Copy code from the private repo to the public repo
-          cp -r ../. ./
+          # Copy contents from the private repo to the public repo
+          cp -r ../.[^.]* ./
 
           # Add, commit, and push changes
           git add .
@@ -38,4 +38,4 @@ jobs:
           git push origin test-one
 
         env:
-          PAT_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
