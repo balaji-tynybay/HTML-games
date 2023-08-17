@@ -5,6 +5,9 @@ on:
     branches:
       - test-one
 
+permissions:
+  contents: write
+
 jobs:
   push_to_public_repo:
     runs-on: ubuntu-latest
