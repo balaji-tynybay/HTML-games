@@ -24,7 +24,7 @@ jobs:
           cd repo_b
           git checkout -b test-one
         env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.GH_PAT }}
 
       - name: Set up Git in Target Repo
         run: |
