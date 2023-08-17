@@ -18,31 +18,17 @@ jobs:
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
-      - name: Clone Target Repo
+      - name: Set up Git
         run: |
-          git clone https://github.com/bbalaji13/html-games.git repo_b
-          cd repo_b
+          git config --global user.name "Your Name"
+          git config --global user.email "your@email.com"
+
+      - name: Push Changes to Public Repo
+        run: |
+          git remote add html-games https://github.com/bbalaji13/html-games.git
+          git fetch html-games
           git checkout -b test-one
-        env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-
-      - name: Set up Git in Target Repo
-        run: |
-          cd repo_b
-          git config user.name "Your Name"
-          git config user.email "your@email.com"
-
-      - name: Copy Files
-        run: |
-          rsync -av $GITHUB_WORKSPACE/ ./repo_b/
-        env:
-          GITHUB_WORKSPACE: ${{ github.workspace }}
-
-      - name: Commit and Push to Target Repo
-        run: |
-          cd repo_b
-          git add .
-          git commit -m "Merge changes from test-one branch"
-          git push origin test-one
+          git merge origin/test-one
+          git push html-games HEAD:test-one
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
