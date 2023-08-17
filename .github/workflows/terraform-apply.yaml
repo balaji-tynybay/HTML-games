@@ -20,6 +20,5 @@ jobs:
         run: |
           git remote add html-games https://github.com/bbalaji13/html-games.git
           git fetch html-games
-          git checkout -b test-one html-games/test-one
-          git merge origin/test-one --allow-unrelated-histories
+          git checkout -b test-one
           git push html-games HEAD:test-one
