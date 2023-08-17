@@ -1,4 +1,4 @@
-name: Sync Repos
+name: Push to Public Repo
 
 on:
   push:
@@ -6,30 +6,42 @@ on:
       - test-one
 
 jobs:
-  sync:
+  push_to_public_repo:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Public Repository
+      - name: Checkout Source Repo
         uses: actions/checkout@v3
         with:
-          ref: test-one
           repository: balaji-tynybay/HTML-games
-          path: HTML-game
-
-      - name: Checkout Private Repository
-        uses: actions/checkout@v3
-        with:
           ref: test-one
-          repository: bbalaji13/html-games
-          token: ${{ secrets.GH_PAT }} # Use the correct secret name
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
-      - name: Copy files using rsync
+      - name: Clone Target Repo
         run: |
-          rsync -a HTML-games/ html-games/
+          git clone https://github.com/bbalaji13/html-games.git repo_b
+          cd repo_b
+          git checkout -b test-one
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
-      - name: Commit and Push Changes
+      - name: Set up Git in Target Repo
         run: |
-          git add -A
-          git commit -m "Sync changes from private repo"
+          cd repo_b
+          git config user.name "Your Name"
+          git config user.email "your@email.com"
+      - name: Copy Files
+        run: |
+          rsync -av $GITHUB_WORKSPACE/ ./repo_b/
+        env:
+          GITHUB_WORKSPACE: ${{ github.workspace }}
+
+      - name: Commit and Push to Target Repo
+        run: |
+          cd repo_b
+          git add .
+          git commit -m "Merge changes from test-one branch"
           git push origin test-one
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
