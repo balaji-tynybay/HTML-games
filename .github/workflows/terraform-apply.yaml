@@ -20,16 +20,13 @@ jobs:
           git remote add public-repo https://github.com/bbalaji13/html-games.git
           git fetch public-repo
 
-      - name: Check if branch2 exists
+      - name: Push to Public Repository
         run: |
-          if git ls-remote --heads public-repo branch2 | grep -q 'refs/heads/branch2'; then
-            git checkout test-one
+          if git ls-remote --heads public-repo test-one | grep -q 'refs/heads/test-one'; then
+            git checkout -b test-one --track public-repo/test-one
           else
             git checkout -b test-one
           fi
-
-      - name: Push to Public Repository
-        run: |
           git push public-repo HEAD:test-one --force
 
 env:
