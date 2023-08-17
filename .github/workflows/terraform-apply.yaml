@@ -17,9 +17,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Password
-          git config --global user.email "git@actions.com"
+          # git config --global user.email "git@actions.com"
           # User name
-          git config --global user.name "Git Actions"
+          # git config --global user.name "Git Actions"
+
+          git -c user.email="actions@github.com" -c user.name="GitHub Actions"
 
           
           # Clone the public repository
