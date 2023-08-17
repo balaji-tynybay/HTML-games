@@ -16,7 +16,7 @@ jobs:
           repository: balaji-tynybay/HTML-games
           ref: test-one
         env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.GH_PAT }}
 
       - name: Clone Target Repo
         run: |
@@ -46,4 +46,4 @@ jobs:
           git commit -m "Merge changes from test-one branch"
           git push origin test-one
         env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.GH_PAT }}
