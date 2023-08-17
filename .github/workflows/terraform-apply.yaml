@@ -15,7 +15,8 @@ jobs:
         with:
           ref: test-one
           repository: balaji-tynybay/HTML-games
-          path: HTML-games
+          path: HTML-game
+
       - name: Checkout Private Repository
         uses: actions/checkout@v3
         with:
@@ -24,11 +25,10 @@ jobs:
           token: ${{ secrets.GH_PAT }} # Use the correct secret name
           path: html-games
           steps:
-            - uses: actions/checkout@v3
-            - run: |
-                rsync -a HTML-game/ html-games/
-                git config user.name github-actions
-                git config user.email github-actions@github.com
-                git add .
-                git commit -m "generated"
-                git push
+          run: |
+            rsync -a ../HTML-game/* .
+            git config --global user.email "actions@github.com"
+            git config --global user.name "GitHub Actions"
+            git add .
+            git commit -m "Sync changes from private repo"
+            git push origin test-one
