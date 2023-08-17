@@ -3,7 +3,7 @@ name: Push to Public Repository
 on:
   push:
     branches:
-      - branch1  # Adjust this to the branch you want to trigger the action on
+      - test-one  # Adjust this to the branch you want to trigger the action on
 
 jobs:
   push_to_public:
