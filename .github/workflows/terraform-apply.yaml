@@ -25,7 +25,7 @@ jobs:
           token: ${{ secrets.GH_PAT }} # Use the correct secret name
           path: html-games
           run: |
-            rsync -a HTML-game/ html-games/
+            rsync -a ../HTML-game/ html-games/
             git config --global user.email "actions@github.com"
             git config --global user.name "GitHub Actions"
             git add -A
