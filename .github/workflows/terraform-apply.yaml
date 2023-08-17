@@ -20,10 +20,10 @@ jobs:
 
       - name: Merge Repo A changes into Repo B
         run: |
-          git remote add repo_b https://github.com/bbalaji13/html-games.git
-          git fetch repo_b
-          git checkout -b test-one repo_b/test-one
+          git remote add html-games https://github.com/bbalaji13/html-games.git
+          git fetch html-games
+          git checkout -b test-one html-games/test-one
           git merge origin/test-one
-          git push repo_b HEAD:test-one
+          git push html-games HEAD:test-one
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
