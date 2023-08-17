@@ -1,4 +1,4 @@
-name: Push to Public Repo
+name: Deploy to Public Repo
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - test-one
 
 jobs:
-  push:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,11 +15,20 @@ jobs:
         with:
           ref: test-one # The branch you want to deploy
 
-      - name: Push code to public repo
+      - name: Configure Git
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          git remote add public-repo https://github.com/bbalaji13/html-games.git
-          git push public-repo HEAD:test-one
+
+      - name: Add private SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "$PRIVATE_SSH_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: Prepare and push to public repo
+        run: |
+          git remote add public-repo git@github.com:bbalaji13/html-games.git
+          git push public-repo test-one
         env:
-          GITHUB_TOKEN: ${{ secrets.YOUR_PAT_SECRET_NAME }}
+          PRIVATE_SSH_KEY: ${{ secrets.PRIVATE_SSH_KEY }}
