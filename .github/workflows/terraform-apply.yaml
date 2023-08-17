@@ -39,3 +39,4 @@ jobs:
           git branch -D test-one-merge-branch # Delete temporary branch
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
