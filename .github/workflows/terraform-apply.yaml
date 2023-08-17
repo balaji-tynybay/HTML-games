@@ -1,28 +1,28 @@
-name: Terraform Deployment
+name: Push to Public Repository
 
 on:
   push:
     branches:
-      - main
-  workflow_dispatch:  # Enable manual triggering
+      - test-one
 
 jobs:
-  deploy:
+  push_to_public:
     runs-on: ubuntu-latest
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Deploy level0
-        run: cd level0 && terraform init && terraform apply -auto-approve || exit 0
+      - name: Configure Git
+        run: |
+          git config --global user.name "Your Name"
+          git config --global user.email "your.email@example.com"
+          git remote add public-repo https://github.com/bbalaji13/html-games.git
 
-      - name: Deploy level1
-        run: cd level1 && terraform init && terraform apply -auto-approve
+      - name: Push to Public Repository
+        run: |
+          git checkout -b test-one
+          git push public-repo HEAD:test-one --force
 
-      - name: Deploy level2
-        run: cd level2 && terraform init && terraform apply -auto-approve
-        
+env:
+  PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
