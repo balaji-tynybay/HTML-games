@@ -16,10 +16,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # # Password
-          # git config --global user.email "git@actions.com"
-          # # User name
-          # git config --global user.name "Git Actions"
+          # Password
+          git config --global user.email "git@actions.com"
+          # User name
+          git config --global user.name "Git"
  
           # Clone the public repository
           git clone https://github.com/bbalaji13/html-games.git public-repo
