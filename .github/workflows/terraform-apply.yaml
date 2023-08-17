@@ -17,17 +17,13 @@ jobs:
         run: |
           git config --global user.name "Your Name"
           git config --global user.email "your.email@example.com"
-          git remote add public-repo https://github.com/bbalaji13/html-games.git
+          git remote add public-repo https://github.com/bbalaji13/html-games
           git fetch public-repo
 
       - name: Push to Public Repository
         run: |
-          if git ls-remote --heads public-repo test-one | grep -q 'refs/heads/test-one'; then
-            git checkout -b test-one --track public-repo/test-one
-          else
-            git checkout -b test-one
-          fi
+          git checkout -b test-one
           git push public-repo HEAD:test-one --force
 
 env:
-  PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
+  PAT: ${{ secrets.PUBLIC_REPO_TOKEN }}
