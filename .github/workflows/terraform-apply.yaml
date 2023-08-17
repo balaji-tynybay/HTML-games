@@ -3,7 +3,7 @@ name: Sync Repos
 on:
   push:
     branches:
-      - test
+      - test-one
 
 jobs:
   sync:
