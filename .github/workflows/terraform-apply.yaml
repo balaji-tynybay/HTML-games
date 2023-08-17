@@ -40,6 +40,8 @@ jobs:
       - name: Commit and Push to Target Repo
         run: |
           cd repo_b
+          git config user.name "Your Name"
+          git config user.email "your@email.com"
           git add .
           git commit -m "Merge changes from test-one branch"
           git push origin test-one
