@@ -13,8 +13,10 @@ jobs:
       - name: Checkout Repo A
         uses: actions/checkout@v2
         with:
-          repository: your-account/repo-a # Replace with your Repo A URL
+          repository: balaji-tynybay/HTML-games
           ref: test-one
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Set up Git
         run: |
