@@ -18,21 +18,21 @@ jobs:
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
-      - name: Checkout Target Repo
+      - name: Clone Target Repo
         run: git clone https://github.com/bbalaji13/html-games.git repo_b
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-
-      - name: Copy Files
-        run: cp -r $GITHUB_WORKSPACE/* repo_b/
-        env:
-          GITHUB_WORKSPACE: ${{ github.workspace }}
 
       - name: Set up Git in Target Repo
         run: |
           cd repo_b
           git config user.name "Your Name"
           git config user.email "your@email.com"
+
+      - name: Copy Files
+        run: cp -r $GITHUB_WORKSPACE/* ./repo_b/
+        env:
+          GITHUB_WORKSPACE: ${{ github.workspace }}
 
       - name: Commit and Push to Target Repo
         run: |
