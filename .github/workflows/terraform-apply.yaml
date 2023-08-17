@@ -12,14 +12,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Configure Git Identity
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+
       - name: Push to Public Repo
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Password
-          git config --global user.email "git@actions.com"
-          # User name
-          git config --global user.name "Git Actions"
+          # # Password
+          # git config --global user.email "git@actions.com"
+          # # User name
+          # git config --global user.name "Git Actions"
           
           # Clone the public repository
           git clone https://github.com/bbalaji13/html-games.git public-repo
