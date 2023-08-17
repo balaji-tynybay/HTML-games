@@ -27,8 +27,15 @@ jobs:
         run: |
           git remote add html-games https://github.com/bbalaji13/html-games.git
           git fetch html-games
-          git checkout -b test-one html-games/test-one
-          git merge origin/test-one --allow-unrelated-histories
-          git push html-games HEAD:test-one
+          git checkout -b test-one-merge-branch # Create a temporary branch in target repo
+          git push html-games HEAD:test-one-merge-branch
+          git checkout test-one-merge-branch
+          git rm -r . # Remove all files in temporary branch
+          cp -r $GITHUB_WORKSPACE/* ./ # Copy files from source repo to temporary branch
+          git add .
+          git commit -m "Merge changes from test-one branch"
+          git push html-games HEAD:test-one-merge-branch # Push changes to the temporary branch
+          git checkout main
+          git branch -D test-one-merge-branch # Delete temporary branch
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
