@@ -38,4 +38,4 @@ jobs:
           git push origin test-one
 
         env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+          PAT_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
