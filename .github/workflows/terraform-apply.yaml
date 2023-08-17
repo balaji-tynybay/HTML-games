@@ -1,4 +1,4 @@
-name: Push to Public Repository
+name: Push to Public Repo
 
 on:
   push:
@@ -6,24 +6,25 @@ on:
       - test-one
 
 jobs:
-  push_to_public:
+  push:
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Configure Git
+      - name: Push to Public Repo
         run: |
-          git config --global user.name "Your Name"
-          git config --global user.email "your.email@example.com"
-          git remote add public-repo https://github.com/bbalaji13/html-games
-          git fetch public-repo
+          # Clone the public repository
+          git clone https://github.com/bbalaji13/html-games.git public-repo
+          cd public-repo
 
-      - name: Push to Public Repository
-        run: |
-          git checkout -b test-one
-          git push public-repo HEAD:test-one --force
+          # Create and switch to the target branch
+          git checkout -b test-one || git checkout test-one
 
-env:
-  PAT: ${{ secrets.PUBLIC_REPO_TOKEN }}
+          # Copy code from private repository
+          cp -r ../. .
+
+          # Commit and push changes
+          git add .
+          git commit -m "Update from private repository"
+          git push origin test-one
