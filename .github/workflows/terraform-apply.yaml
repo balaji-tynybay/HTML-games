@@ -1,28 +1,49 @@
-name: Terraform Deployment
+name: Push to Public Repo
 
 on:
   push:
     branches:
-      - main
-  workflow_dispatch:  # Enable manual triggering
+      - test-one
 
 jobs:
-  deploy:
+  push_to_public_repo:
     runs-on: ubuntu-latest
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout Source Repo
+        uses: actions/checkout@v3
+        with:
+          repository: balaji-tynybay/HTML-games
+          ref: test-one
+        env:
+          ACCESS_TOKEN: ${{ secrets.GH_PAT }}
 
-      - name: Deploy level0
-        run: cd level0 && terraform init && terraform apply -auto-approve || exit 0
+      - name: Clone Target Repo
+        run: |
+          git clone https://github.com/bbalaji13/html-games.git repo_b
+          cd repo_b
+          git checkout -b test-one
+        env:
+          ACCESS_TOKEN: ${{ secrets.GH_PAT }}
 
-      - name: Deploy level1
-        run: cd level1 && terraform init && terraform apply -auto-approve
+      - name: Set up Git in Target Repo
+        run: |
+          cd repo_b
+          git config user.name "Your Name"
+          git config user.email "your@email.com"
+      - name: Copy Files
+        run: |
+          rsync -av $GITHUB_WORKSPACE/ ./repo_b/
+        env:
+          GITHUB_WORKSPACE: ${{ github.workspace }}
 
-      - name: Deploy level2
-        run: cd level2 && terraform init && terraform apply -auto-approve
-        
+      - name: Commit and Push to Target Repo
+        run: |
+          cd repo_b
+          git config user.name "Your Name"
+          git config user.email "your@email.com"
+          git add .
+          git commit -m "Merge changes from test-one branch"
+          git push origin test-one
+        env:
+          ACCESS_TOKEN: ${{ secrets.GH_PAT }}
