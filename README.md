@@ -114,7 +114,6 @@ These are the games that got ready
 - [ ] tictoctoe
 
 
-
 ## Contributing
 
 Contributions are welcome! If you find a bug or have an improvement, please open an issue or submit a pull request.
